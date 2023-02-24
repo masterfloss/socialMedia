@@ -21,7 +21,7 @@ def register():
         #image.save(os.path.join("/DOC/UC/SDP/static/uploads/", filename))
         #image.save(os.path.join("static/", filename))
         #image.save(os.path.join("static/", filename))
-        image.save(os.path.join("mysite/static/", filename))
+        image.save(os.path.join("socialMedia/static/", filename))
         models.register_user(name, email, password, filename)
         return redirect(url_for("controller.login"))
     return views.register()
