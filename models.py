@@ -1,27 +1,32 @@
 import sqlite3
+from sqlite3 import Error
 
 def init_db():
-    conn = sqlite3.connect("app.db")
-    cursor = conn.cursor()
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        email TEXT NOT NULL,
-        password TEXT NOT NULL,
-        image TEXT NOT NULL
-    );
-    """)
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS posts (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER NOT NULL,
-        title TEXT NOT NULL,
-        content TEXT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users (id)
-    );
-    """)
-    conn.commit()
+    try:
+        conn = sqlite3.connect("app.db")
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL,
+                password TEXT NOT NULL,
+                image TEXT NOT NULL
+            );
+            """)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS posts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                title TEXT NOT NULL,
+                content TEXT NOT NULL,
+                FOREIGN KEY (user_id) REFERENCES users (id)
+            );
+            """)
+        conn.commit()
+    except Error as e:
+        print(e)
+
     conn.close()
 
 def register_user(name, email, password, image):
